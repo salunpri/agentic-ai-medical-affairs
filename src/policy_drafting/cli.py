@@ -13,6 +13,7 @@ except ImportError:
     sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from policy_drafting.workflow import PolicyDraftingWorkflow
+from policy_drafting.integration.dashboard_exporter import DashboardExporter
 from loguru import logger
 
 
@@ -218,7 +219,6 @@ def export_policy(args):
         policy_draft = json.load(f)
     
     # Initialize exporter
-    from policy_drafting.integration.dashboard_exporter import DashboardExporter
     exporter = DashboardExporter(export_dir=args.output_dir)
     
     # Export

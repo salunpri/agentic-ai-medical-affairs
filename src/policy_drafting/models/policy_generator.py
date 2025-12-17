@@ -24,7 +24,7 @@ class PolicyGenerator:
             temperature: Temperature for generation (0.0-1.0)
         """
         self.model_name = model_name
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY", "")
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.temperature = temperature
         self.policy_templates = self._load_templates()
         logger.info(f"Policy generator initialized with model: {model_name}")

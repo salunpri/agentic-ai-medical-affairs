@@ -8,11 +8,6 @@ python-dotenv>=1.0.0
 pandas>=2.0.0
 numpy>=1.24.0
 
-# NLP and text processing
-transformers>=4.35.0
-torch>=2.1.0
-sentence-transformers>=2.2.0
-
 # Evidence extraction
 biopython>=1.81
 beautifulsoup4>=4.12.0

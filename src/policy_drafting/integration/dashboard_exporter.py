@@ -166,47 +166,50 @@ class DashboardExporter:
             raise
     
     def _markdown_to_html(self, markdown_text: str) -> str:
-        """Convert markdown-style text to HTML."""
-        html = markdown_text
+        """
+        Convert markdown-style text to HTML.
         
-        # Convert headers
-        html = html.replace('# ', '<h1>').replace('\n\n', '</h1>\n\n')
-        html = html.replace('## ', '<h2>').replace('\n', '</h2>\n')
-        
-        # Convert lists
-        lines = html.split('\n')
+        Note: This is a simple converter. For production use,
+        consider using a proper markdown library like markdown2 or mistune.
+        """
+        lines = markdown_text.split('\n')
+        html_lines = []
         in_list = False
-        result = []
         
         for line in lines:
-            if line.strip().startswith('- '):
+            line_stripped = line.strip()
+            
+            # Handle headers
+            if line_stripped.startswith('# '):
+                html_lines.append(f'<h1>{line_stripped[2:]}</h1>')
+            elif line_stripped.startswith('## '):
+                html_lines.append(f'<h2>{line_stripped[3:]}</h2>')
+            elif line_stripped.startswith('### '):
+                html_lines.append(f'<h3>{line_stripped[4:]}</h3>')
+            # Handle list items
+            elif line_stripped.startswith('- '):
                 if not in_list:
-                    result.append('<ul>')
+                    html_lines.append('<ul>')
                     in_list = True
-                result.append(f'<li>{line.strip()[2:]}</li>')
+                html_lines.append(f'<li>{line_stripped[2:]}</li>')
+            # Handle regular text
+            elif line_stripped:
+                if in_list:
+                    html_lines.append('</ul>')
+                    in_list = False
+                html_lines.append(f'<p>{line_stripped}</p>')
+            # Handle empty lines
             else:
                 if in_list:
-                    result.append('</ul>')
+                    html_lines.append('</ul>')
                     in_list = False
-                result.append(line)
+                # Empty line - just skip or add spacing
         
+        # Close list if still open
         if in_list:
-            result.append('</ul>')
+            html_lines.append('</ul>')
         
-        html = '\n'.join(result)
-        
-        # Convert paragraphs
-        html = html.replace('\n\n', '</p>\n<p>')
-        html = '<p>' + html + '</p>'
-        
-        # Clean up empty paragraphs
-        html = html.replace('<p></p>', '')
-        html = html.replace('<p></h1>', '</h1>')
-        html = html.replace('<p></h2>', '</h2>')
-        html = html.replace('</h1></p>', '</h1>')
-        html = html.replace('</h2></p>', '</h2>')
-        
-        return html
+        return '\n'.join(html_lines)
     
     def export_validation_results(
         self,
