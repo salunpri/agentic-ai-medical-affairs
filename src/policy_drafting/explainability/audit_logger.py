@@ -20,7 +20,7 @@ class AuditLogger:
         """
         self.log_dir = log_dir or os.getenv(
             "AUDIT_LOG_DIR",
-            "/home/runner/work/agentic-ai-medical-affairs/agentic-ai-medical-affairs/data/audit_logs"
+            "./data/audit_logs"
         )
         Path(self.log_dir).mkdir(parents=True, exist_ok=True)
         self.current_session_id = self._generate_session_id()

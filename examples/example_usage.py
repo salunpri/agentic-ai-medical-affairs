@@ -4,13 +4,18 @@ Example usage of the Healthcare Policy Drafting System.
 
 This script demonstrates how to use the system to generate
 a healthcare policy from medical research.
+
+Note: Run this after installing the package with `pip install -e .`
 """
 
 import sys
 from pathlib import Path
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+# Only add to path if package not installed
+try:
+    import policy_drafting
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from policy_drafting.workflow import PolicyDraftingWorkflow
 from policy_drafting.evidence import PubMedClient, EvidenceProcessor

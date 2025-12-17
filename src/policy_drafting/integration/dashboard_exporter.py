@@ -20,7 +20,7 @@ class DashboardExporter:
         """
         self.export_dir = export_dir or os.getenv(
             "EXPORT_DIR",
-            "/home/runner/work/agentic-ai-medical-affairs/agentic-ai-medical-affairs/data/exports"
+            "./data/exports"
         )
         Path(self.export_dir).mkdir(parents=True, exist_ok=True)
         logger.info(f"Dashboard exporter initialized: {self.export_dir}")

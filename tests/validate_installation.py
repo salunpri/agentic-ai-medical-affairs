@@ -2,12 +2,18 @@
 """
 Quick validation script to test core functionality.
 This script runs basic tests without requiring external API keys.
+
+Note: Run this after installing the package with `pip install -e .`
 """
 
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+# Only add to path if package not installed
+try:
+    import policy_drafting
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from policy_drafting.evidence import EvidenceProcessor
 from policy_drafting.models import PolicyGenerator
