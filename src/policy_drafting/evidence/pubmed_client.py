@@ -4,6 +4,7 @@ import os
 from typing import List, Dict, Optional
 from datetime import datetime
 import requests
+from bs4 import BeautifulSoup
 from loguru import logger
 
 
@@ -127,8 +128,6 @@ class PubMedClient:
         Returns:
             List of parsed article dictionaries
         """
-        from bs4 import BeautifulSoup
-        
         articles = []
         soup = BeautifulSoup(xml_text, "lxml-xml")
         

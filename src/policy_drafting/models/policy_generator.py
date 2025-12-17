@@ -2,7 +2,7 @@
 
 import os
 from typing import Dict, List, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 from loguru import logger
 
 
@@ -333,7 +333,6 @@ This policy must comply with:
     
     def _calculate_next_review_date(self) -> str:
         """Calculate next policy review date (1 year from now)."""
-        from datetime import timedelta
         next_review = datetime.now() + timedelta(days=365)
         return next_review.strftime("%Y-%m-%d")
     
